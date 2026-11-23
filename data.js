@@ -18,7 +18,7 @@ window.PORTFOLIO = {
   available: true,                   // shows the "open to opportunities" badge
   links: {
     github: "https://github.com/adi407",
-    linkedin: "",                    // TODO: add your LinkedIn URL
+    linkedin: "https://www.linkedin.com/in/aditya-kumar-4806b6127",
     email: "adityakumar20111@gmail.com",
     resume: "",                      // TODO: e.g. "resume.pdf" (put the file next to index.html)
   },
