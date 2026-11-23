@@ -15,16 +15,6 @@
   const linkBtn = (href, label, icon, cls = "") =>
     `<a class="btn ${cls}" href="${esc(href)}" ${href.startsWith("#") || href.startsWith("mailto:") ? "" : 'target="_blank" rel="noopener"'}>${ICONS[icon] || ""}${esc(label)}</a>`;
 
-  function profileLinks(primaryHref, primaryLabel) {
-    const L = P.links, out = [];
-    if (primaryHref) out.push(linkBtn(primaryHref, primaryLabel, "arrow", "primary"));
-    if (L.email) out.push(linkBtn("mailto:" + L.email, "Email", "email", primaryHref ? "" : "primary"));
-    if (L.github) out.push(linkBtn(L.github, "GitHub", "github"));
-    if (L.linkedin) out.push(linkBtn(L.linkedin, "LinkedIn", "linkedin"));
-    if (L.resume) out.push(linkBtn(L.resume, "Resume", "resume"));
-    return out.join("");
-  }
-
   /* ---------- HERO ---------- */
   const initials = P.name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
   document.title = `${P.name} — ${P.role}`;
@@ -37,10 +27,58 @@
   $("heroRole").innerHTML = `<span class="slash">//</span> <span class="rot" id="roleRot">${esc(roles[0])}</span>`;
   $("heroTagline").textContent = P.tagline;
   $("heroIntro").textContent = P.intro;
-  $("availText").textContent = (P.available ? "Open to opportunities" : "Currently heads-down") + (P.location ? " · " + P.location : "");
+  $("availText").textContent = (P.available ? (P.availability || "Open to opportunities") : "Currently heads-down") + (P.location ? " · " + P.location : "");
   if (!P.available) $("availDot").style.background = "var(--ink-3)";
-  $("heroLinks").innerHTML = profileLinks("#systems", "See my systems");
-  $("contactLinks").innerHTML = profileLinks("", "");
+
+  const L = P.links;
+  const mail = (subject, body) => "mailto:" + L.email + "?subject=" + encodeURIComponent(subject) + (body ? "&body=" + encodeURIComponent(body) : "");
+  const social = () =>
+    (L.linkedin ? linkBtn(L.linkedin, "LinkedIn", "linkedin") : "") +
+    (L.github ? linkBtn(L.github, "GitHub", "github") : "") +
+    (L.resume ? linkBtn(L.resume, "Resume", "resume") : "");
+  $("heroLinks").innerHTML =
+    linkBtn("#contact", "Work with me", "arrow", "primary") +
+    linkBtn("#systems", "See my systems", "") + social();
+  if (L.email) {
+    $("contactHire").innerHTML = linkBtn(mail("Job opportunity for " + P.name), "Email me", "email", "primary") + social();
+    $("contactProject").innerHTML = linkBtn(
+      mail("Project enquiry: AI / automation",
+        "Hi " + P.name.split(" ")[0] + ",\n\nWhat I'd like to automate or build:\n\nTools / systems we use today:\n\nRough timeline and budget:\n\nThanks,"),
+      "Start a project", "email", "primary") + (L.linkedin ? linkBtn(L.linkedin, "Message on LinkedIn", "linkedin") : "");
+    $("serviceCta").href = "#contact";
+  } else {
+    $("contactHire").innerHTML = social();
+    $("contactProject").innerHTML = social();
+  }
+
+  /* ---------- ABOUT ---------- */
+  if (P.about) {
+    $("aboutText").innerHTML = P.about.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("");
+    $("aboutFacts").innerHTML = P.about.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+  } else $("about").remove();
+
+  /* ---------- SERVICES ---------- */
+  const SVC_ICONS = {
+    chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/>',
+    flow: '<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v3a3 3 0 0 0 3 3h6"/><path d="m13 12 3 3-3 3"/>',
+    spark: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/>',
+    wave: '<path d="M2 12h2M6 8v8M10 5v14M14 9v6M18 7v10M22 12h-2"/>',
+    plug: '<path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/>',
+    box: '<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
+  };
+  const sysName = Object.fromEntries(P.systems.map((s) => [s.id, s.name]));
+  if (P.services && P.services.length) {
+    $("serviceGrid").innerHTML = P.services.map((v) => `
+      <div class="service">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${SVC_ICONS[v.icon] || SVC_ICONS.box}</svg></div>
+        <h3>${esc(v.title)}</h3>
+        <p>${esc(v.pitch)}</p>
+        <ul>${v.deliverables.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>
+        <div class="proof"><span>Proof:</span>${v.proof.filter((id) => sysName[id]).map((id) => `<a href="#sys-${id}">${esc(sysName[id])}</a>`).join("")}</div>
+      </div>`).join("");
+    $("process").innerHTML = (P.process || []).map(([t, d], i) => `
+      <div class="step"><b>${String(i + 1).padStart(2, "0")}</b><h4>${esc(t)}</h4><p>${esc(d)}</p></div>`).join("");
+  } else $("services").remove();
   $("footName").textContent = P.name;
   $("year").textContent = new Date().getFullYear();
 
@@ -115,20 +153,27 @@
       <div class="mini"><h3>${esc(c.name)}</h3><p>${esc(c.note)}</p><div class="chips">${chips(c.tech)}</div>
       <div class="sys-links">${c.live ? linkBtn(c.live, "Live", "live", "btn-sm") : ""}${c.repo ? linkBtn(c.repo, "Source", "github", "btn-sm") : ""}</div></div>`).join("")}</div>`;
   }
-  if (P.experience.length) {
-    more += `<h3 class="subhead">Experience</h3><div class="timeline">${P.experience.map((e) => `
-      <div class="tl"><div class="when">${esc(e.period)}</div><div><h3>${esc(e.role)}</h3><p>${esc(e.org)}</p>
-      ${e.points && e.points.length ? `<ul>${e.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}</div></div>`).join("")}</div>`;
-  }
-  if (P.education.length) {
-    more += `<h3 class="subhead">Education</h3><div class="timeline">${P.education.map((e) => `
-      <div class="tl"><div class="when">${esc(e.period)}</div><div><h3>${esc(e.degree)}</h3><p>${esc(e.org)}</p></div></div>`).join("")}</div>`;
-  }
   if (more) {
-    $("more").innerHTML = `<div class="section-head"><p class="kicker">03 / More</p><h2>Beyond the main systems</h2></div>` + more;
+    $("more").innerHTML = `<div class="section-head"><p class="kicker">06 / More</p><h2>Smaller work & contributions</h2></div>` + more;
   } else {
     $("more").remove();
-    $("navMore").remove();
+  }
+
+  /* ---------- EXPERIENCE / EDUCATION ---------- */
+  if (P.experience.length) {
+    $("xpList").innerHTML = P.experience.map((e, i) => `
+      <div class="tl${i === 0 ? " current" : ""}">
+        <div class="when">${esc(e.period)}${e.place ? `<span>${esc(e.place)}</span>` : ""}</div>
+        <div><h3>${esc(e.role)}</h3><p class="org">${esc(e.org)}</p>
+        ${e.points && e.points.length ? `<ul>${e.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}</div>
+      </div>`).join("");
+    const edu = (P.education || []).map((e) => `
+      <div class="edu"><p class="sub">Education</p><h3>${esc(e.degree)}</h3><p>${esc(e.org)} · ${esc(e.period)}</p></div>`).join("");
+    const certs = (P.certifications || []).map((c) => `
+      <div class="edu"><p class="sub">Certification${c.status ? " · " + esc(c.status) : ""}</p><h3>${esc(c.name)}</h3><p>${esc(c.org)}</p></div>`).join("");
+    $("eduGrid").innerHTML = edu + certs;
+  } else {
+    $("experience").remove();
   }
 
   /* ---------- CATEGORY TABS ---------- */
@@ -258,6 +303,7 @@
   /* Scroll reveal (with stagger within each group) */
   const groups = [
     ".section-head > *", ".cat-tabs", ".system", ".stack-card", ".mini", ".tl", ".stat", ".contact > *",
+    ".about-text p", ".facts > div", ".service", ".step", ".service-cta", ".edu",
   ];
   const revealEls = [];
   groups.forEach((sel) => document.querySelectorAll(sel).forEach((el, i) => {
@@ -288,7 +334,7 @@
   /* Cursor spotlight on cards */
   if (!reduce && matchMedia("(hover: hover)").matches) {
     document.addEventListener("pointermove", (e) => {
-      const card = e.target.closest(".system, .stack-card, .mini, .terminal");
+      const card = e.target.closest(".system, .stack-card, .mini, .terminal, .service");
       if (!card) return;
       const r = card.getBoundingClientRect();
       card.style.setProperty("--mx", e.clientX - r.left + "px");

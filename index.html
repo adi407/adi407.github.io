@@ -4,12 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio — Systems & Stack</title>
-  <meta name="description" content="Systems I've designed and shipped, and the technologies behind them." />
+  <meta name="description" content="Aditya Kumar: full-stack engineer (8+ years) and freelance AI implementation & automation consultant. 13 systems built, from SaaS platforms to RAG and speech AI." />
+  <meta property="og:title" content="Aditya Kumar: Full-Stack Engineer & AI Automation Consultant" />
+  <meta property="og:description" content="8+ years of enterprise engineering. Freelance AI assistants, WhatsApp and workflow automation, and AI integration." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://adi407.github.io/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="motion.css" />
+  <link rel="stylesheet" href="sections.css" />
   <script>
     try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -21,10 +26,12 @@
     <div class="wrap nav-inner">
       <a href="#top" class="brand"><span class="brand-mark" id="brandMark"></span><span id="brandName"></span></a>
       <nav class="nav-links" aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
         <a href="#systems">Systems</a>
+        <a href="#experience">Experience</a>
         <a href="#stack">Stack</a>
-        <a href="#more" id="navMore">More</a>
-        <a href="#contact">Contact</a>
+        <a href="#contact" class="nav-cta">Hire me</a>
       </nav>
       <button class="icon-btn" id="themeBtn" aria-label="Toggle colour theme">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -56,10 +63,37 @@
 
     <div class="marquee" id="marquee" aria-hidden="true"><div class="marquee-track" id="marqueeTrack"></div></div>
 
+    <!-- ABOUT -->
+    <section class="section wrap" id="about">
+      <div class="section-head">
+        <p class="kicker">01 / About</p>
+        <h2>Enterprise engineer by day, product builder by night</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text" id="aboutText"></div>
+        <dl class="facts" id="aboutFacts"></dl>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section wrap" id="services">
+      <div class="section-head">
+        <p class="kicker">02 / Freelance services</p>
+        <h2>AI implementation & automation for your business</h2>
+        <p class="muted">Every service is backed by a system I've already built. Click a project to see it.</p>
+      </div>
+      <div class="service-grid" id="serviceGrid"></div>
+      <div class="process" id="process"></div>
+      <div class="service-cta">
+        <p><strong>Have a workflow that eats hours every week?</strong> Tell me about it. The first call is free.</p>
+        <a class="btn primary" id="serviceCta" href="#contact">Discuss a project</a>
+      </div>
+    </section>
+
     <!-- SYSTEMS -->
     <section class="section wrap" id="systems">
       <div class="section-head">
-        <p class="kicker">01 / Systems</p>
+        <p class="kicker">03 / Systems</p>
         <h2>Things I've built end to end</h2>
         <p class="muted">Each one with its architecture, what makes it interesting, and the stack behind it.</p>
       </div>
@@ -71,10 +105,20 @@
       <div id="systemList" class="system-list"></div>
     </section>
 
+    <!-- EXPERIENCE -->
+    <section class="section wrap" id="experience">
+      <div class="section-head">
+        <p class="kicker">04 / Experience</p>
+        <h2>8+ years shipping software for large organisations</h2>
+      </div>
+      <div class="timeline xp" id="xpList"></div>
+      <div class="edu-grid" id="eduGrid"></div>
+    </section>
+
     <!-- STACK -->
     <section class="section wrap" id="stack">
       <div class="section-head">
-        <p class="kicker">02 / Stack</p>
+        <p class="kicker">05 / Stack</p>
         <h2>Technologies I work with</h2>
         <p class="muted">Click any technology to see the systems where I've used it.</p>
         <div class="legend">
@@ -92,9 +136,20 @@
     <!-- CONTACT -->
     <section class="section wrap contact" id="contact">
       <p class="kicker">Contact</p>
-      <h2>Have a system that needs building?</h2>
-      <p class="muted">Open to backend, full-stack and platform engineering roles and projects.</p>
-      <div class="cta-row" id="contactLinks"></div>
+      <h2>Let's build something that works</h2>
+      <p class="muted">Whether you're hiring or have a project, I usually reply within a day.</p>
+      <div class="contact-split">
+        <div class="contact-card">
+          <h3>Hiring for a full-time role?</h3>
+          <p>Senior full-stack, backend or AI engineering roles: Java, Spring Boot, Angular, Node.js, Python.</p>
+          <div class="cta-row" id="contactHire"></div>
+        </div>
+        <div class="contact-card accent">
+          <h3>Have a freelance project?</h3>
+          <p>AI assistants, WhatsApp and workflow automation, content pipelines, or adding AI to your app. Share what you'd like automated and I'll suggest an approach.</p>
+          <div class="cta-row" id="contactProject"></div>
+        </div>
+      </div>
     </section>
   </main>
 

@@ -7,15 +7,17 @@
 window.PORTFOLIO = {
   name: "Aditya Kumar",            // TODO: confirm your name
   handle: "adi407",
-  role: "Backend & Systems Engineer",
-  roles: ["Backend & Systems Engineer", "Full-Stack Product Builder", "Applied AI Engineer", "SaaS Platform Architect"],
-  tagline: "I design and ship complete systems, from off-heap caches to multi-tenant SaaS and AI platforms.",
+  role: "Full-Stack Engineer & AI Automation Consultant",
+  roles: ["Full-Stack Engineering Leader", "AI Implementation Consultant", "Automation Engineer", "SaaS Platform Architect"],
+  tagline: "8+ years building enterprise software. Now I also help businesses put AI and automation to work.",
   intro:
-    "I build backends in Java/Spring Boot and Node.js, frontends in Angular and React, and AI services " +
-    "in Python, all on top of PostgreSQL, then ship them with Docker, Nginx and CI. I care about measured " +
-    "behaviour, honest benchmarks and decisions written down.",
-  location: "India",                // TODO: edit or set to ""
-  available: true,                   // shows the "open to opportunities" badge
+    "Full-stack engineer (Java, Spring Boot, Angular, Node.js) with 8+ years across finance, healthcare, " +
+    "government and geospatial platforms, at EY, Infosys for Vanguard, and MapmyIndia. On my own I've built " +
+    "13 complete systems, from a multi-venue SaaS to AI transcription and RAG platforms. Open to full-time " +
+    "roles and to freelance AI and automation projects.",
+  location: "Delhi, India",
+  available: true,
+  availability: "Open to full-time roles & freelance AI projects",
   links: {
     github: "https://github.com/adi407",
     linkedin: "https://www.linkedin.com/in/aditya-kumar-4806b6127",
@@ -25,10 +27,84 @@ window.PORTFOLIO = {
 
   /* Shown as the big numbers under the hero. Keep them true. */
   stats: [
-    { value: "13", label: "end-to-end systems" },
+    { value: "8+", label: "years in software engineering" },
+    { value: "13", label: "end-to-end systems built" },
     { value: "3", label: "live in production" },
-    { value: "217", label: "DB migrations in ClubManager alone" },
-    { value: "7.7%", label: "word error rate on live call transcription" },
+    { value: "4", label: "industries: finance, health, gov, geo" },
+  ],
+
+  /* About — shown beside key facts */
+  about: {
+    paragraphs: [
+      "I've spent 8+ years building software that large organisations depend on: a national tribunal " +
+      "digitisation platform for the Ministry of Finance at EY, wealth-platform modules for Vanguard at Infosys, " +
+      "a hospital management system for Mankind Pharma, and mapping and live-tracking services at MapmyIndia.",
+      "Outside work I build complete products end to end. ClubManager runs real venues. Other systems transcribe " +
+      "multilingual calls, answer questions from legal documents, reply to customers on WhatsApp and publish " +
+      "content on their own. That's the experience I bring to clients: AI that's wired into real workflows, " +
+      "with the engineering discipline to keep it running.",
+    ],
+    facts: [
+      ["Based in", "Delhi, India (remote-friendly)"],
+      ["Experience", "8+ years · EY, Infosys, MapmyIndia"],
+      ["Core stack", "Java · Spring Boot · Angular · Node.js · Python"],
+      ["AI work", "RAG, LLM agents, speech-to-text, automation"],
+      ["Open to", "Full-time roles · Freelance projects"],
+    ],
+  },
+
+  /* Freelance services — each one points at systems that prove it (ids from `systems`) */
+  services: [
+    {
+      icon: "chat",
+      title: "AI assistants on your own data",
+      pitch: "Chatbots that answer from your documents, policies or product data, with sources, not guesses.",
+      deliverables: ["RAG over PDFs, scans and databases", "Access control and audit trail", "Web or WhatsApp front end"],
+      proof: ["legal-ai", "efiling", "expert-network"],
+    },
+    {
+      icon: "flow",
+      title: "WhatsApp & workflow automation",
+      pitch: "Capture leads, book appointments and answer customers around the clock, then hand off to a human when it matters.",
+      deliverables: ["WhatsApp Cloud API bots", "Lead capture and appointment booking", "CRM, sheets and email integration"],
+      proof: ["autolead", "clubmanager"],
+    },
+    {
+      icon: "spark",
+      title: "AI content & marketing automation",
+      pitch: "Pipelines that research, write, voice, edit and publish (reels, SEO fixes, ad videos) with approval steps built in.",
+      deliverables: ["Automatic video and reel generation", "SEO audit-and-fix loops", "Scheduled publishing with human review"],
+      proof: ["storyteller", "seo-platform", "clubmanager"],
+    },
+    {
+      icon: "wave",
+      title: "Voice, transcription & meeting AI",
+      pitch: "Accurate transcripts and summaries for calls and meetings, including mixed Hindi-English speech.",
+      deliverables: ["Whisper-based transcription", "Speaker-aware transcripts", "LLM summaries and action items"],
+      proof: ["expert-network"],
+    },
+    {
+      icon: "plug",
+      title: "Add AI to your existing software",
+      pitch: "Bring LLM features into your current Java, Angular or Node app safely, without a rewrite.",
+      deliverables: ["LLM/embedding service integration", "Cost caching and rate limiting", "Evaluation and monitoring"],
+      proof: ["fastcache", "expert-network", "gainr"],
+    },
+    {
+      icon: "box",
+      title: "MVPs & internal tools",
+      pitch: "From idea to a working, deployed product: multi-tenant SaaS, dashboards, portals, payments.",
+      deliverables: ["Full-stack build and deployment", "Auth, roles, billing, reports", "CI/CD and handover docs"],
+      proof: ["clubmanager", "gainr", "sms"],
+    },
+  ],
+
+  /* How a freelance engagement runs */
+  process: [
+    ["Discovery call", "A free 30-minute call to understand the workflow, the data and what success looks like."],
+    ["Prototype", "A small working proof on your real data, usually within 1-2 weeks, so you see the value before you commit."],
+    ["Build & integrate", "Production build wired into your tools, with access control, logging and cost limits."],
+    ["Handover & support", "Documentation, training and optional ongoing support and improvements."],
   ],
 
   systems: [
@@ -535,7 +611,7 @@ window.PORTFOLIO = {
   /* Tech stack. level: "core" | "working" | "exposure" (no fake percentages). */
   stack: [
     { group: "Backend", items: [
-      ["Java", "core"], ["Spring Boot", "core"], ["Spring Security", "core"], ["JWT", "core"],
+      ["Java", "core"], ["Spring Boot", "core"], ["Spring Security", "core"], ["Microservices", "core"], ["GraphQL", "core"], ["JWT", "core"],
       ["JPA / Hibernate", "core"], ["Node.js", "core"], ["Express", "core"], ["Python", "core"],
       ["FastAPI", "working"], ["Virtual Threads", "working"], ["OpenAPI", "working"], ["Maven", "working"],
     ]},
@@ -555,11 +631,11 @@ window.PORTFOLIO = {
       ["FFmpeg", "working"], ["Tesseract OCR", "exposure"], ["MQTT / EMQX", "exposure"],
     ]},
     { group: "Data & Messaging", items: [
-      ["PostgreSQL", "core"], ["Flyway", "core"], ["Redis", "working"], ["RabbitMQ", "working"],
+      ["PostgreSQL", "core"], ["MySQL", "core"], ["MongoDB", "working"], ["Flyway", "core"], ["Redis", "working"], ["RabbitMQ", "working"],
       ["MinIO / S3", "working"], ["Alembic", "exposure"],
     ]},
     { group: "Cloud, DevOps & Testing", items: [
-      ["Docker", "core"], ["Nginx", "working"], ["GitHub Actions", "working"], ["AWS", "working"],
+      ["Docker", "core"], ["Jenkins", "working"], ["JUnit / Mockito", "core"], ["Nginx", "working"], ["GitHub Actions", "working"], ["AWS", "working"],
       ["Prometheus", "working"], ["Grafana", "exposure"], ["Cypress", "working"], ["Playwright", "working"],
     ]},
     { group: "Integrations & APIs", items: [
@@ -571,9 +647,45 @@ window.PORTFOLIO = {
 
   /* Optional — leave the arrays empty to hide these sections. */
   experience: [
-    // { role: "Software Engineer", org: "Company", period: "2024 — Present", points: ["...", "..."] },
+    {
+      role: "Consultant", org: "Ernst & Young India LLP", place: "Delhi", period: "May 2024 — Present",
+      points: [
+        "Lead full-stack engineering on a national tribunal digitisation platform under the Ministry of Finance (Java 17, Spring Boot, Angular 17)",
+        "Designed scalable APIs and middleware with record-based DTOs, sealed class hierarchies and Node.js secure communication services",
+        "Defined coding standards and Java 17 modernisation guidelines across the team",
+        "Mentor junior engineers through code reviews, pair programming and technical workshops",
+      ],
+    },
+    {
+      role: "Technical Analyst", org: "Infosys (client: Vanguard)", place: "Gurugram", period: "Jun 2022 — Apr 2024",
+      points: [
+        "Engineered financial modules for Vanguard's next-generation wealth platform using Java, GraphQL and custom BFF layers, cutting response latency",
+        "Improved throughput and reliability through backend optimisation and high-coverage unit tests",
+        "Took part in enterprise architecture discussions and cross-team technical initiatives",
+      ],
+    },
+    {
+      role: "Senior Software Engineer", org: "Uneecops Technologies (client: Mankind Pharma)", place: "Noida", period: "Mar 2021 — Jun 2022",
+      points: [
+        "Led development of DRONa (a hospital management system) and CIO Portal (a low-code form builder) on Angular and Spring Boot",
+        "Designed JSON-schema-driven dynamic UIs and secure eSign workflows (CDAC)",
+        "Drove frontend architecture for accessibility (WCAG), responsiveness and modular components",
+      ],
+    },
+    {
+      role: "Software Engineer", org: "C.E. Info Systems (MapmyIndia)", place: "Delhi", period: "Oct 2018 — Mar 2021",
+      points: [
+        "Built full-stack modules for geospatial platforms with Angular, Spring MVC and microservices",
+        "Implemented location-intelligence APIs, live-tracking services and Jasper Reports dashboards for MGIS and Digital Sky",
+        "Delivered high-availability mapping solutions used across India",
+      ],
+    },
   ],
   education: [
-    // { degree: "B.Tech, Computer Science", org: "University", period: "2019 — 2023" },
+    { degree: "B.Tech, Computer Science & Engineering", org: "Lovely Professional University", period: "2015 — 2019" },
+  ],
+  certifications: [
+    { name: "Spring Framework Certification", org: "VMware", status: "" },
+    { name: "Oracle Certified Java SE 17 Developer", org: "Oracle", status: "In progress" },
   ],
 };
