@@ -19,7 +19,7 @@ window.PORTFOLIO = {
   links: {
     github: "https://github.com/adi407",
     linkedin: "",                    // TODO: add your LinkedIn URL
-    email: "",                       // TODO: add the email you want public
+    email: "adityakumar20111@gmail.com",
     resume: "",                      // TODO: e.g. "resume.pdf" (put the file next to index.html)
   },
 
