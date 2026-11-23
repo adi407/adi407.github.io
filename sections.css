@@ -47,7 +47,6 @@
 .step { padding: 22px; border-right: 1px solid var(--line); position: relative; }
 .step:last-child { border-right: 0; }
 .step b { font-family: var(--mono); font-size: 12px; color: var(--accent); }
-.step h4 { font-family: var(--display); font-size: 17px; margin: 6px 0 6px; }
 .step p { margin: 0; color: var(--ink-2); font-size: 14px; }
 .step::after { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform: scaleX(0); transform-origin: left; transition: transform .8s var(--ease); transition-delay: var(--d, 0ms); }
 .step.in::after { transform: scaleX(1); }

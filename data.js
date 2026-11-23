@@ -110,6 +110,16 @@ window.PORTFOLIO = {
   systems: [
     {
       id: "clubmanager",
+      notes: {
+        deploy: "Vite SPA on clubmanager.store and Express API on api.clubmanager.store, over PostgreSQL. CI runs contract, integration and SEO test suites before each deploy. The on-site edge gateway runs as a system service at each venue.",
+        tradeoffs: [
+          "One multi-tenant codebase scoped by club_id instead of an app per venue type: one deploy serves every venue, at the cost of feature-flag and venue-profile logic in the UI.",
+          "Non-venue engines (SEO, content, ads) are mounted as sidecars behind one boundary, so setting SIDECARS=off runs the venue API on its own.",
+          "Relays are switched by an on-site daemon, never from the cloud. That avoids an SSRF path into customer networks, and hotel rooms default to never auto-off.",
+          "Razorpay payment links rather than the checkout SDK, with the webhook HMAC-verified against the raw request body.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       categories: ["saas", "automation"],
       featured: true,
       name: "ClubManager",
@@ -160,6 +170,15 @@ window.PORTFOLIO = {
     },
     {
       id: "expert-network",
+      notes: {
+        deploy: "Docker Compose (Angular/Nginx, Spring Boot, FastAPI, PostgreSQL with pgvector, Redis) with a GitHub Actions build-and-deploy pipeline and health checks. Whisper runs on Modal GPUs.",
+        tradeoffs: [
+          "Waiting-room state is kept in memory per call. It's simple and fast, but it ties each call to a single backend instance.",
+          "Each browser records only its own mic in 30 s chunks, which gives clean per-speaker transcripts without diarisation; the cost is stitching chunks on the server.",
+          "The CPU fallback keeps calls working when the GPU path is down, but it is far less accurate (52% vs 12% WER), so it's treated as a degraded mode.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       categories: ["ai", "saas"],
       featured: true,
       name: "AI Expert Network Platform",
@@ -205,6 +224,15 @@ window.PORTFOLIO = {
     },
     {
       id: "fastcache",
+      notes: {
+        deploy: "Shipped as a library: a Spring Boot starter for JVM services, plus a Python package that boots, discovers and reaps its own JVM sidecar. CI and release workflows run on GitHub Actions.",
+        tradeoffs: [
+          "Deliberately single-node and non-durable, with no replication or persistence. For those, use Redis; this is a different tool.",
+          "Off-heap storage removes GC pauses on 20–50 MB payloads but needs manual reference counting, so there's a dedicated off-heap-leak alert.",
+          "The dollar-savings figure is an estimate that errs high (4 chars per token, every hit counted as a full call), and the console labels it that way.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       categories: ["infra", "ai"],
       name: "FastCache",
       kind: "Infrastructure · Library",
@@ -242,6 +270,15 @@ window.PORTFOLIO = {
     },
     {
       id: "sms",
+      notes: {
+        deploy: "Docker Compose (PostgreSQL, Redis, RabbitMQ, MinIO, Spring Boot, Angular, Nginx). GitHub Actions builds the JAR and the Angular app, deploys over SSH to schoolmanager.live, then runs a health check.",
+        tradeoffs: [
+          "Multi-module Maven backend (api / core / auth / batch) keeps batch and auth concerns separate inside a single deployable.",
+          "Per-school features are switched with flags enforced by an AOP annotation, rather than separate builds per customer.",
+          "Slow work goes through RabbitMQ so reports, emails and batch jobs don't hold request threads.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       categories: ["saas"],
       name: "School Management System",
       kind: "Multi-tenant SaaS",
@@ -283,6 +320,15 @@ window.PORTFOLIO = {
     },
     {
       id: "seo-platform",
+      notes: {
+        deploy: "One Spring Boot service and the Angular app behind the same reverse proxy, so it's same-origin with no CORS in the customer path. Docker images for both; the dev profile starts PostgreSQL in-process.",
+        tradeoffs: [
+          "A modular monolith, not microservices: no Kafka, Kubernetes or Elasticsearch until the product loop is proven.",
+          "PostgreSQL is the only source of truth. Redis holds just locks and rate limits, so losing it costs throughput, not data.",
+          "The agent that writes a change never approves it, and even passing changes wait for a human pull-request review.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       name: "Autonomous SEO Engineering Platform",
       kind: "SaaS · AI agents",
       status: "In development",
@@ -321,6 +367,14 @@ window.PORTFOLIO = {
     },
     {
       id: "legal-ai",
+      notes: {
+        deploy: "Docker Compose: FastAPI backend and Angular/Nginx frontend, with Qdrant, MinIO and PostgreSQL alongside.",
+        tradeoffs: [
+          "The LLM, embedding and OCR engines sit behind configurable service URLs, so models can be swapped without code changes.",
+          "Answers are grounded in chunks retrieved from the uploaded case record, not in the model's own memory.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       name: "Legal Document Analyzer",
       kind: "Applied AI · RAG",
       status: "Prototype",
@@ -355,6 +409,13 @@ window.PORTFOLIO = {
     },
     {
       id: "efiling",
+      notes: {
+        deploy: "Three services: an Angular 17 portal, a Spring Boot API and a Python (FastAPI + LangGraph) AI service.",
+        tradeoffs: [
+          "The AI service is never exposed directly. Spring proxies every chatbot call and forwards the verified user plus a service key, keeping a single auth boundary.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       name: "e-Filing Case Management System",
       kind: "GovTech · Client project",
       status: "Client project",
@@ -389,6 +450,14 @@ window.PORTFOLIO = {
     },
     {
       id: "autolead",
+      notes: {
+        deploy: "Spring Boot API and Angular admin panel, with CI on GitHub Actions. Meta delivers WhatsApp messages to a public webhook endpoint.",
+        tradeoffs: [
+          "Hexagonal architecture means more interfaces up front, but the flow engine is pure Java and testable without Spring or Meta.",
+          "Conversation and session state live in memory for now: quick to build, but they'd need external storage to run more than one instance.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       name: "autoLead AI",
       kind: "SaaS · WhatsApp automation",
       status: "Beta",
@@ -423,6 +492,13 @@ window.PORTFOLIO = {
     },
     {
       id: "gainr",
+      notes: {
+        deploy: "Docker Compose on AWS EC2 (PostgreSQL, Spring Boot, Nginx), with progress photos on S3 and email through SES.",
+        tradeoffs: [
+          "Food scanning runs server-side with a per-client daily limit (10 by default) to cap AI cost; manual logging keeps working without an AI key.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       name: "GAINR",
       kind: "SaaS · Fitness coaching",
       status: "Closed beta",
@@ -456,6 +532,14 @@ window.PORTFOLIO = {
     },
     {
       id: "forecasting",
+      notes: {
+        deploy: "Core library, FastAPI service and Next.js dashboard. Uses SQLite by default; there's no authentication yet, so it isn't exposed publicly.",
+        tradeoffs: [
+          "Starts with pooled trailing averages: a manager can reconstruct them on a whiteboard, which matters more for adoption than small accuracy gains.",
+          "A fallback ladder instead of forcing Holt-Winters onto short series, and the output says which model it actually used.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       name: "RevOps Forecasting Engine",
       kind: "Data · ML",
       status: "In development",
@@ -489,6 +573,13 @@ window.PORTFOLIO = {
     },
     {
       id: "games",
+      notes: {
+        deploy: "A single Spring Boot process with in-process schedulers; the Angular static build is served behind a reverse proxy.",
+        tradeoffs: [
+          "Spring's in-process STOMP broker instead of RabbitMQ: enough for the target of 4 rooms × 4 players, with no extra infrastructure.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       name: "Real-time Game Platform",
       kind: "Real-time · Multiplayer",
       status: "Prototype",
@@ -521,6 +612,14 @@ window.PORTFOLIO = {
     },
     {
       id: "storyteller",
+      notes: {
+        deploy: "Runs daily from Windows Task Scheduler, with a Telegram bot for manual triggers and a local TTS fallback.",
+        tradeoffs: [
+          "Comment replies are drafted automatically but sent only after approval, keeping a human in the loop on anything public.",
+          "Real news articles are the fact source, and numbers in the script are checked before the voiceover is made.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       name: "storyTeller",
       kind: "Automation · AI content",
       status: "Running daily",
@@ -555,6 +654,13 @@ window.PORTFOLIO = {
     },
     {
       id: "form-engine",
+      notes: {
+        deploy: "Spring Boot API and Angular SPA with Nginx deployment configs; Docker Compose for local PostgreSQL and Flyway-managed migrations.",
+        tradeoffs: [
+          "Forms are stored as JSON schemas, so a single renderer serves every form and any form can be exported, shared by URL or embedded.",
+        ],
+      },
+      deepDive: "",   // optional: URL of a case study / blog post
       categories: ["saas"],
       name: "Dynamic Form Engine",
       kind: "Form SaaS · Builder",
